@@ -1,0 +1,26 @@
+Abrir o izing no visual studio code
+
+Baixar Docker e node.js
+
+docker run --name postgresql -e POSTGRES_USER=izing -e POSTGRES_PASSWORD=passpostgres -p 5432:5432 -v /data:/var/lib/postgresql/data -d postgres
+
+docker run -e -TZ="America/Sao_Paulo" --name redis-izing -p 6379:6379 -d --restart=always redis:latest redis-server --appendonly yes --requirepass passredis
+
+docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 --restart=always --hostname rabbitmq -v /data:/var/lib/rabbitmq rabbitmq:3-management-alpine
+
+
+Colocar mesmo usuario e senha do postgres e do redis que estão nos codigos acima no .env no backend
+
+
+cd izing/backend
+npm install --force
+npm run build
+npm run db:migrate //Apenas na primeira vez
+npm run db:seed //Apenas na primeira vez
+npm start
+
+cd izing/frontend
+npm i -g @quasar/cli
+npx quasar build -P -m pwa
+npx quasar dev
+
